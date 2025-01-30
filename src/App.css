@@ -1,0 +1,7 @@
+#active{
+    background-color: #314158 !important;
+    color: white;
+    transition-duration: 1.5s;
+    transition: .5s ease-in-out;
+}
+
