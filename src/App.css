@@ -1,32 +1,72 @@
-#active{
-    background-color: #314158 !important;
-    color: white;
-    transition-duration: 1.5s;
-    transition: .5s ease-in-out;
+#active {
+  background-color: #314158 !important;
+  color: white;
+  transition-duration: 1.5s;
+  transition: 0.5s ease-in-out;
 }
 
 .log-container {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .log-item {
-    padding: 8px 12px;
-    border-radius: 5px;
-    color: white;
+  list-style: none;
+  padding: 0;
+}
+
+.log-item {
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: white;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
     transform: translateY(-10px);
-    animation: fadeIn 0.5s ease-in-out forwards;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+}
+
+#game-over {
+  background-color: rgba(40, 38, 23, 0.95);
+  animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.65, 0.52) forwards;
+}
+
+#game-over h2 {
+  font-family: "Caprasimo", cursive;
+  font-size: 4rem;
+  text-align: center;
+  color: #fcd256;
+  margin: 0;
+}
+
+#game-over p {
+  font-size: 2rem;
+  text-align: center;
+  color: #e1dec7;
+}
+
+#game-over button {
+  display: block;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  background: none;
+  border: 2px solid #fcd256;
+  color: #fcd256;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s, color 0.2s;
+  box-shadow: 0 0 8px rgba(255, 187, 0, 0.4);
+}
+
+#game-over button:hover {
+  background: #fcd256;
+  color: #3f3b00;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 187, 0, 0.8);
+}

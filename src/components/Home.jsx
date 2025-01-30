@@ -3,6 +3,7 @@ import GameBoard from "./GameBoard";
 import Player from "./Players";
 import Logs from "./Logs";
 import { WINNING_COMBINATIONS as winComb } from './Winning_combination';
+import GameOver from "./GameOver";
 
 const initialGameBoard = [
   [null, null, null],
@@ -22,6 +23,8 @@ function derivedActivePlayer(gameTurns){
 }
 
 export default function Home() {
+
+
   const [gameTurns, setGameTurns] = useState([]);
   let activePlayer = derivedActivePlayer(gameTurns);
 
@@ -53,6 +56,8 @@ export default function Home() {
     }
   }
 
+  const hasDraw = gameTurns.length === 9 && !winner;
+
   function handleSelectSquare(rowIndex, colIndex) {
     setGameTurns((prevTurns) => {
 
@@ -75,6 +80,7 @@ export default function Home() {
   return (
     <>
       <div className="w-screen h-screen bg-indigo-500 m-0 p-0">
+
         <div className="w-full h-1/19 bg-indigo-200 shadow-lg flex items-center justify-center">
           <h1 className="text-black text-center text-2xl md:text-3xl font-semibold">
             Tic Tac Toe
@@ -104,7 +110,7 @@ export default function Home() {
             
             <div className="h-4/5 w-full md:w-1/2  mt-2 bg-indigo-500 flex flex-col gap-4 
             justify-center items-center rounded-md shadow-xl p-10 md:p-0">
-              {winner && <p>You won, {winner}</p>}
+              {(winner || hasDraw) && <GameOver winner={winner} />}
               <GameBoard
                 onSelectSquare={handleSelectSquare}
                 board={gameBoard}
