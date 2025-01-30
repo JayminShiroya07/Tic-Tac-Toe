@@ -6,7 +6,18 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard( { onSelectSquare } ) {
+export default function GameBoard( { onSelectSquare , turns  } ) {
+
+
+    let GameBoard = initialGameBoard;
+
+    for(const turn of turns){
+        const {square , player} = turn;
+        const {row,col} = square;
+
+        GameBoard[row][col] = player; 
+    }
+
 //   const [GameBoard,setGameBoard] = useState(initialGameBoard);
 
 //   function handleSelectSquare(rowIndex, colIndex){
@@ -29,7 +40,7 @@ export default function GameBoard( { onSelectSquare } ) {
             <li
               key={colIndex}
               className="w-1/3 bg-amber-200  flex items-center justify-center rounded-md"
-                onClick={onSelectSquare}
+                onClick={() => onSelectSquare(rowIndex,colIndex)}
             >
               <button 
               className="text-8xl font-bold ">{playerSymbol}</button>

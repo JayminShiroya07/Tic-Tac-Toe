@@ -4,14 +4,14 @@ import Player from "./Players";
 
 export default function Home() {
   const [gameTurns, setGameTurns ] = useState([]);
-  const [activePlayer, setActivePlayer] = useState("O");
+  const [activePlayer, setActivePlayer] = useState("X");
 
   function handleSelectSquare(rowIndex, colIndex ) {
     setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
     setGameTurns((prevTurns) => {
       let currentPlayer = 'X';
       
-      if(prevTurn.length > 0 && prevTurn[0] === 'X')
+      if(prevTurns.length > 0 && prevTurns[0].player === 'X')
         currentPlayer = 'O';
 
       const updateTurns = [
