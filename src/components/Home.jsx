@@ -28,7 +28,7 @@ export default function Home() {
   const [gameTurns, setGameTurns] = useState([]);
   let activePlayer = derivedActivePlayer(gameTurns);
 
-  let gameBoard = initialGameBoard;
+  let gameBoard = [...initialGameBoard.map(array => [...array])];
 
   for(const turn of gameTurns){
 
@@ -77,6 +77,10 @@ export default function Home() {
     });
   }
 
+  function handleResetGame(){
+    setGameTurns([]);
+  }
+
   return (
     <>
       <div className="w-screen h-screen bg-indigo-500 m-0 p-0">
@@ -110,7 +114,7 @@ export default function Home() {
             
             <div className="h-4/5 w-full md:w-1/2  mt-2 bg-indigo-500 flex flex-col gap-4 
             justify-center items-center rounded-md shadow-xl p-10 md:p-0">
-              {(winner || hasDraw) && <GameOver winner={winner} />}
+              {(winner || hasDraw) && <GameOver winner={winner} onrestart={handleResetGame}/>}
               <GameBoard
                 onSelectSquare={handleSelectSquare}
                 board={gameBoard}
