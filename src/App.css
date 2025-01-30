@@ -5,3 +5,28 @@
     transition: .5s ease-in-out;
 }
 
+.log-container {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .log-item {
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
