@@ -2,6 +2,13 @@ import { useState } from "react";
 import GameBoard from "./GameBoard";
 import Player from "./Players";
 import Logs from "./Logs";
+import { WINNING_COMBINATIONS as winComb } from './Winning_combination';
+
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
 function derivedActivePlayer(gameTurns){
   let currentPlayer = 'X';
@@ -14,10 +21,37 @@ function derivedActivePlayer(gameTurns){
 
 }
 
-
 export default function Home() {
   const [gameTurns, setGameTurns] = useState([]);
   let activePlayer = derivedActivePlayer(gameTurns);
+
+  let gameBoard = initialGameBoard;
+
+  for(const turn of gameTurns){
+
+      const {square , player} = turn;
+      const {row,col} = square;
+
+      gameBoard[row][col] = player;
+
+      console.log("win")
+  }
+  
+  let winner;
+
+  for(const combination of winComb){
+    const firstSquareSymbol = gameBoard[combination[0].row][combination[0].column];
+    const secondSquareSymbol = gameBoard[combination[1].row][combination[1].column];
+    const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].column];
+
+    if (
+      firstSquareSymbol &&
+      firstSquareSymbol === secondSquareSymbol &&
+      firstSquareSymbol === thirdSquareSymbol
+    ) {
+      winner = firstSquareSymbol;
+    }
+  }
 
   function handleSelectSquare(rowIndex, colIndex) {
     setGameTurns((prevTurns) => {
@@ -70,9 +104,10 @@ export default function Home() {
             
             <div className="h-4/5 w-full md:w-1/2  mt-2 bg-indigo-500 flex flex-col gap-4 
             justify-center items-center rounded-md shadow-xl p-10 md:p-0">
+              {winner && <p>You won, {winner}</p>}
               <GameBoard
                 onSelectSquare={handleSelectSquare}
-                turns={gameTurns}
+                board={gameBoard}
               />
             </div>
             <ol className="h-1/5 w-full md:flex justify-center items-center text-center md:w-2/3 mt-2 gap-4 sm:hidden">
