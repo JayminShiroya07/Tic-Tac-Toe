@@ -5,7 +5,12 @@ import Logs from "./Logs";
 import { WINNING_COMBINATIONS as winComb } from './Winning_combination';
 import GameOver from "./GameOver";
 
-const initialGameBoard = [
+const PLAYER = {
+  X: "player 1",
+  O: "player 2"
+};
+
+const INITIAL_GAME_BOARD = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -22,24 +27,7 @@ function derivedActivePlayer(gameTurns){
 
 }
 
-export default function Home() {
-
-
-  const [gameTurns, setGameTurns] = useState([]);
-  let activePlayer = derivedActivePlayer(gameTurns);
-
-  let gameBoard = [...initialGameBoard.map(array => [...array])];
-
-  for(const turn of gameTurns){
-
-      const {square , player} = turn;
-      const {row,col} = square;
-
-      gameBoard[row][col] = player;
-
-      console.log("win")
-  }
-  
+function deriveWinner(gameBoard,players){
   let winner;
 
   for(const combination of winComb){
@@ -52,10 +40,37 @@ export default function Home() {
       firstSquareSymbol === secondSquareSymbol &&
       firstSquareSymbol === thirdSquareSymbol
     ) {
-      winner = firstSquareSymbol;
+      winner = players[firstSquareSymbol];
     }
   }
 
+  return winner;
+}
+
+function deriveGameBoard(gameTurns){
+  let gameBoard = [...INITIAL_GAME_BOARD.map(array => [...array])];
+
+  for(const turn of gameTurns){
+
+      const {square , player} = turn;
+      const {row,col} = square;
+
+      gameBoard[row][col] = player;
+
+      console.log("win")
+  }
+
+  return gameBoard;
+}
+
+export default function Home() {
+
+  const [players,setPlayers] = useState(PLAYER);
+  const [gameTurns, setGameTurns] = useState([]);
+  
+  const activePlayer = derivedActivePlayer(gameTurns);
+  const gameBoard = deriveGameBoard(gameTurns);
+  const winner = deriveWinner(gameBoard,players)
   const hasDraw = gameTurns.length === 9 && !winner;
 
   function handleSelectSquare(rowIndex, colIndex) {
@@ -81,6 +96,16 @@ export default function Home() {
     setGameTurns([]);
   }
 
+  function handelPlayerNameChange(symbole,newName){
+    setPlayers( prvPLayer => {
+      return {
+        ...prvPLayer,
+        [symbole] : newName
+      };
+    });
+  }
+
+
   return (
     <>
       <div className="w-screen h-screen bg-indigo-500 m-0 p-0">
@@ -96,19 +121,21 @@ export default function Home() {
             {/* player bar */}
             <div className="h-fit w-full p-2 md:p-6 md:w-1/2 bg-indigo-500 rounded-md shadow-xl flex flex-row">
               <Player
-                Name="jaymeen"
+                Name={PLAYER.X}
                 Symbole="X"
                 button={"button"}
-                num="1"
                 isActive={activePlayer === "X"}
+                num="1"
+                onChangeName = {handelPlayerNameChange}
               />
               <div className="w-[3px] bg-amber-300"></div>
               <Player
-                Name="jaymeen"
+                Name={PLAYER.O}
                 Symbole="O"
                 button={"button"}
                 isActive={activePlayer === "O"}
                 num="2"
+                onChangeName = {handelPlayerNameChange}
               />
             </div>
             
