@@ -45,7 +45,7 @@ export default function Player({ Name, Symbole, num, isActive,onChangeName, }) {
           </div>
           <div 
             id={isActive?'active':''}
-            className='w-1/3 rounded-md border-2 p-3 md:text-4xl font-bold text-center'>
+            className='w-14 h-14 rounded-md border-2 flex justify-center items-center md:text-3xl font-bold text-center'>
             {Symbole}
           </div>
         </div>

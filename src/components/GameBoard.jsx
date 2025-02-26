@@ -1,9 +1,9 @@
 export default function GameBoard({ onSelectSquare, board }) {
 
   return (
-    <ol className="flex flex-col h-full w-full gap-4 p-0 md:px-25 md:py-8">
+    <ol className="flex flex-col h-full w-full gap-4 p-0 md:px-10 md:py-10">
       {board.map((row, rowIndex) => (
-        <li key={rowIndex} className="w-full h-1/3">
+        <li key={rowIndex} className="w-full h-1/5 md:h-1/2 md:1/3">
           <ol className="flex w-full h-full gap-4">
             {row.map((playerSymbol, colIndex) => (
               <li
